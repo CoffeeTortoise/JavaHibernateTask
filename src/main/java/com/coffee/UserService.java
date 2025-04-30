@@ -72,6 +72,11 @@ public class UserService {
         System.out.println("User has been created!");
     }
 
+    protected void createUser(User user) {
+        this.userDAO.save(user);
+        System.out.println("User has been created!");
+    }
+
     private void updateUser() {
         System.out.println("Enter user id:");
         Long id = this.scanner.nextLong();
@@ -84,6 +89,15 @@ public class UserService {
         } else System.out.println("User not found!");
     }
 
+    protected void updateUser(Long l, String name, String email, int age) {
+        User user = this.userDAO.findById(l);
+        if (user != null) {
+            user.setName(name);
+            user.setAge(age);
+            user.setEmail(email);
+        } else System.out.println("User not found!");
+    }
+
     private void deleteUser() {
         System.out.println("Enter user id:");
         Long id = this.scanner.nextLong();
@@ -93,6 +107,14 @@ public class UserService {
             this.userDAO.delete(user);
             System.out.println("User has been deleted!");
         } else System.out.println("User not found!");
+    }
+
+    protected void deleteUser(Long id) {
+        User user = this.userDAO.findById(id);
+        if (user != null) {
+            this.userDAO.delete(user);
+            System.out.println("User has been deleted!");
+        } else System.out.println("User not found");
     }
 
     private void listAllUsers() {
@@ -110,6 +132,10 @@ public class UserService {
         } else System.out.println("There is no users in here!");
     }
 
+    protected List<User> listAllUsers(int unused) {
+        return this.userDAO.findAll();
+    }
+
     private void readUser() {
         System.out.println("Enter user id:");
         Long id = this.scanner.nextLong();
@@ -124,6 +150,10 @@ public class UserService {
                     user.getAge()
             );
         } else System.out.println("User not found!");
+    }
+
+    protected User readUser(Long l) {
+        return this.userDAO.findById(l);
     }
 
     private void fillUserParams(User user) {
